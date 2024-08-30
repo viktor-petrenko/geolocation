@@ -13,7 +13,7 @@ The GeoLocation Utility is a command-line tool that interacts with the OpenWeath
 - Robust error handling for invalid inputs or API errors.
 
 ### Usage
-1. download jar : [geolocation-1.0.jar](./geolocation-1.0.jar) (file could be found at the repo root https://github.com/viktor-petrenko/geolocation/blob/main/geolocation-1.0.jar)\
+1. download jar : [geolocation-1.0.jar](./geolocation-1.0.jar) (file could be found at the repo root https://github.com/viktor-petrenko/geolocation/blob/main/geolocation-1.0.jar)
 2. open terminal
 3. cd to the folder which contains geolocation-1.0.jar
 4. Execute following command java -jar geolocation-1.0.jar "Madison, WI" "12345" "Chicago, IL" "10001" "85382" "dsadsa, -1"
