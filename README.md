@@ -60,7 +60,7 @@ No results found for dsadsa, -1
 ### Cloning the Repository
 ```
 git clone https://github.com/viktor-petrenko/geolocation.git
-cd geolocation-utility
+cd geolocation
 ```
 ## (REQUIRED) ADD API KEY TO THE CONFIG file
 add api key to the src/main/resources/config.properties\
