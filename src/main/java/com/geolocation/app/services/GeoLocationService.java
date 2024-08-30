@@ -19,7 +19,7 @@ public class GeoLocationService {
     private static final String BASE_URL = "http://api.openweathermap.org/geo/1.0/";
 
     static {
-        Properties properties = new Properties(); //todo could be improved, but for this particular case should be good
+        Properties properties = new Properties();
         try (InputStream input = GeoLocationService.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
                 System.out.println("Sorry, unable to find config.properties");
@@ -27,6 +27,12 @@ public class GeoLocationService {
             }
             properties.load(input);
             API_KEY = properties.getProperty("api.key");
+
+            if (API_KEY == null || API_KEY.trim().isEmpty()) {
+                System.out.println("API key is empty. Please ensure that the api.key property in config.properties is set correctly.");
+                throw new RuntimeException("API key is empty");
+            }
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to load API key from properties file", e);
         }
