@@ -49,7 +49,7 @@ Country: US
 No results found for dsadsa, -1
 ```
 
-# Setup and build your own jar
+# Setup and build your own jar to run Integration tests
 
 ### Prerequisites
 
@@ -99,9 +99,11 @@ The utility will print the latitude, longitude, country, and other relevant data
 
 ### Testing
 The project includes integration tests written using TestNG and AssertJ. 
-To run the tests clone repository and run tests in the following folder src/test/java/com/geolocation or use the following command:
+To run the tests clone repository and run tests in the following folder src/test/java/com/geolocation
+
+the following command to execute unit tests
 ```
-mvn test
+mvn clean test
 ```
 Test Scenarios Covered
 
@@ -111,7 +113,23 @@ Test Scenarios Covered
     Handling of invalid ZIP code.
     Handling of empty or null input.
     Handling of invalid limit.
+    
+Or run following command to generate JAR and run Integration tests 
+```
+mvn clean verify
+```
+or execute tests manually
+1. mvn clean package
+2. navigate to src/test/java/com/geolocation/integration_tests/GeolocationIntegrationTest.java
+3. trigger them manually 
+Test Scenarios Covered
 
+    Successful API call with city and state.
+    Successful API call with ZIP code.
+    Handling of invalid city/state.
+    Handling of invalid ZIP code.
+    Handling of multiple locations
+   
 ### Error Handling
 
 The utility has built-in error handling that provides informative messages if a location is not found or if there is an issue with the API request. Errors are encapsulated in a GeoLocationError object and returned to the user with a descriptive message.
