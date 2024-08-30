@@ -17,7 +17,7 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <assertj-guava>3.26.3</assertj-guava>
-        <httpclient>4.5.13</httpclient>
+        <httpclient>4.5.14</httpclient>
         <jackson-databind>2.15.2</jackson-databind>
         <testng>7.10.2</testng>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
@@ -110,6 +110,24 @@
                     <source>19</source>
                     <target>19</target>
                     <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>**/integration_tests/**</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
