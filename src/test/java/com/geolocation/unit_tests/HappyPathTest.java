@@ -1,4 +1,4 @@
-package com.geolocation;
+package com.geolocation.unit_tests;
 
 import com.geolocation.app.services.GeoLocationService;
 import com.geolocation.pojo.Result;
@@ -12,11 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 public class HappyPathTest {
-    GeoLocationService service = new GeoLocationService();
 
     @Test
-    public void testGetLocationByCityAndState() throws IOException {
-        Result<CoordinatesByLocationNameResponse> locationByCity = service.getLocationByCityAndState("Garland", "TX");
+    public void testGetLocationByCityAndState() {
+        Result<CoordinatesByLocationNameResponse> locationByCity = new GeoLocationService().getLocationByCityAndState("Garland", "TX");
         assertThat(locationByCity).isNotNull();
 
         if (locationByCity != null) {
@@ -24,12 +23,13 @@ public class HappyPathTest {
             System.out.println("Latitude: " + locationByCity.getData().getLat());
             System.out.println("Longitude: " + locationByCity.getData().getLon());
             System.out.println("Country: " + locationByCity.getData().getCountry());
+            System.out.println("__________________________________________________");
         }
     }
 
     @Test
-    public void testGetLocationByZip() throws IOException {
-        Result<CoordinatesByZipCodeResponse> locationByZip = service.getLocationByZip("75220");
+    public void testGetLocationByZip() {
+        Result<CoordinatesByZipCodeResponse> locationByZip = new GeoLocationService().getLocationByZip("75220");
         assertThat(locationByZip).isNotNull();
 
         if (locationByZip != null) {
@@ -38,14 +38,15 @@ public class HappyPathTest {
             System.out.println("Latitude: " + locationByZip.getData().getLat());
             System.out.println("Longitude: " + locationByZip.getData().getLon());
             System.out.println("Country: " + locationByZip.getData().getCountry());
+            System.out.println("__________________________________________________");
         }
     }
 
     @Test
     public void testMultipleLocations() throws Exception {
         // Test with multiple valid locations
-        Result<CoordinatesByLocationNameResponse> result1 = service.getLocationByCityAndState("Madison", "WI", 1);
-        Result<CoordinatesByZipCodeResponse> result2 = service.getLocationByZip("90210");
+        Result<CoordinatesByLocationNameResponse> result1 = new GeoLocationService().getLocationByCityAndState("Madison", "WI", 1);
+        Result<CoordinatesByZipCodeResponse> result2 = new GeoLocationService().getLocationByZip("90210");
 
         assertThat(result1.isSuccess()).isTrue();
         assertThat(result1.getData()).isNotNull();
