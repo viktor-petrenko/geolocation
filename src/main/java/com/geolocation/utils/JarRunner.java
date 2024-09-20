@@ -34,7 +34,6 @@ public class JarRunner {
         while ((line = reader.readLine()) != null) {
             output.append(line).append("\n");
         }
-
         process.waitFor();
         return output.toString();
     }

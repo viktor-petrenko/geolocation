@@ -1,7 +1,7 @@
 package com.geolocation;
 
 import com.geolocation.app.services.GeoLocationService;
-import com.geolocation.pojo.Result;
+import com.geolocation.pojo.service.RestResponseContainer;
 import com.geolocation.pojo.coords_by_location.CoordinatesByLocationNameResponse;
 import com.geolocation.pojo.coords_by_zip.CoordinatesByZipCodeResponse;
 
@@ -15,14 +15,12 @@ public class GeoLocUtil {
             return;
         }
 
-        GeoLocationService service = new GeoLocationService();
-
         for (String location : args) {
             try {
                 if (isValidZipCode(location)) {
-                    handleZipCode(service, location);
+                    handleZipCode(location);
                 } else if (isValidCityState(location)) {
-                    handleCityState(service, location);
+                    handleCityState(location);
                 } else {
                     System.out.println("Invalid location format: \"" + location + "\""); // todo add log4j
                 }
@@ -34,31 +32,32 @@ public class GeoLocUtil {
     }
 
     private static boolean isValidZipCode(String location) {
-        return location.matches("\\d{5}");
+        return location.matches("\\d{5}") || location.matches("\\d{5}-\\d{4}");
     }
 
     private static boolean isValidCityState(String location) {
         return location.contains(",") && location.split(",").length == 2;
     }
 
-    private static void handleZipCode(GeoLocationService service, String zipCode) throws IOException {
-        Result<CoordinatesByZipCodeResponse> result = service.getLocationByZip(zipCode);
-        if (result.isSuccess()) {
-            CoordinatesByZipCodeResponse response = result.getData();
+    private static void handleZipCode(String zipCode) throws IOException {
+        RestResponseContainer<CoordinatesByZipCodeResponse> restResponseContainer = GeoLocationService.getLocationByZip(zipCode);
+        if (restResponseContainer.isResponseSuccessful()) {
+            CoordinatesByZipCodeResponse response = restResponseContainer.getModel();
             printZipCodeInfo(response);
         } else {
-            System.err.println(result.getError());
+            System.err.println(restResponseContainer.getFailure().getMessage());
         }
     }
 
-    private static void handleCityState(GeoLocationService service, String cityState) throws IOException {
+    private static void handleCityState(String cityState) throws IOException {
+        // TODO PLACE FOR IMPROVEMENT
         String[] parts = cityState.split(",");
-        Result<CoordinatesByLocationNameResponse> result = service.getLocationByCityAndState(parts[0].trim(), parts[1].trim(), 1);
-        if (result.isSuccess()) {
-            CoordinatesByLocationNameResponse response = result.getData();
+        RestResponseContainer<CoordinatesByLocationNameResponse> restResponseContainer = GeoLocationService.getLocationByCityAndState(parts[0].trim(), parts[1].trim(), 1);
+        if (restResponseContainer.isResponseSuccessful()) {
+            CoordinatesByLocationNameResponse response = restResponseContainer.getSuccess();
             printCityStateInfo(response);
         } else {
-            System.err.println(result.getError());
+            System.err.println(restResponseContainer.getFailure().getMessage());
         }
     }
 
